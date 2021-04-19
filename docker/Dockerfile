@@ -1,5 +1,5 @@
 FROM ubuntu:20.04
-LABEL maintainer="kuboshu83"
+LABEL maintainer="Kotashimomura"
 ENV DEBIAN_FRONTEND noninteractive
 ARG INSTALLDIR_PYOCR="/app/ocr"
 RUN apt-get update && \
@@ -31,7 +31,8 @@ RUN apt-get update && \
                 alembic==1.4.1 \
                 sqlalchemy==1.3.13 \
                 optuna && \
-                xgboost \
+    pip install xgboost && \
+    pip install shap && \
     # pip install tensorflow && \
     # pip install torch torchvision && \
     # ~~~~~OpenCVのインストール~~~~~
