@@ -31,21 +31,22 @@ RUN apt-get update && \
                 alembic==1.4.1 \
                 sqlalchemy==1.3.13 \
                 optuna && \
-    pip install tensorflow && \
-    pip install torch torchvision && \
+                xgboost \
+    # pip install tensorflow && \
+    # pip install torch torchvision && \
     # ~~~~~OpenCVのインストール~~~~~
-    pip install opencv-python && \
-    apt-get install -y libgl1-mesa-dev && \
+    # pip install opencv-python && \
+    # apt-get install -y libgl1-mesa-dev && \
     # ~~~~Tesseractのインストール~~~~~
-    apt-get install -y libleptonica-dev tesseract-ocr && \
+    # apt-get install -y libleptonica-dev tesseract-ocr && \
     # ~~~~PyOCRのインストール~~~~~
-    pip install pyocr && \
-    mkdir -p /usr/local/share/tessdata/ && \
-    curl https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/master/jpn.traineddata -sS -L -o /usr/share/tesseract-ocr/4.00/tessdata/jpn.traineddata && \
+    # pip install pyocr && \
+    # mkdir -p /usr/local/share/tessdata/ && \
+    # curl https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/master/jpn.traineddata -sS -L -o /usr/share/tesseract-ocr/4.00/tessdata/jpn.traineddata && \
     # ~~~~MeCabのインストール~~~~
-    apt-get install -y mecab libmecab-dev mecab-ipadic && \
-    pip install --no-binary :all: mecab-python3 && \
-    pip install neologdn && \
+    # apt-get install -y mecab libmecab-dev mecab-ipadic && \
+    # pip install --no-binary :all: mecab-python3 && \
+    # pip install neologdn && \
     #~~~~作業ディレクトリの作成~~~~
     mkdir -p /home/share
 
