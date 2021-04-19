@@ -1,8 +1,4 @@
 import pandas as pd  # 基本ライブラリ
-import numpy as np  # 基本ライブラリ
-import matplotlib.pyplot as plt  # グラフ描画用
-import seaborn as sns
-import warnings  # 実行に関係ない警告を無視
 from sklearn.model_selection import train_test_split  # データセット分割用
 import glob
 import preprocessing_func as pf
@@ -23,6 +19,7 @@ df_train, df_val = train_test_split(df, test_size=0.2)
 
 # 学習
 model = pf.train_model_lgb(df_train, df_val)
+# model = pf.train_model_xgb(df_train, df_val)
 
 # 検証用データの準備
 col = "取引価格（総額）_log"
@@ -40,7 +37,8 @@ predict = model.predict(df_test)
 df_test["取引価格（総額）_log"] = predict  # 目的変数に予測結果を代入
 df_test[["取引価格（総額）_log"]].to_csv("submit_test.csv")  # 目的変数の部分だけをcsvファイルとして作成
 
-df_feature  = pd.DataFrame(model.feature_importance(), index=val_x.columns, columns=["importance"]).sort_values("importance",
-                                                                                                  ascending=False)
+df_feature = pd.DataFrame(model.feature_importance(), index=val_x.columns, columns=["importance"]).sort_values(
+    "importance",
+    ascending=False)
 
 df_feature.to_csv("featureimportance.csv")
