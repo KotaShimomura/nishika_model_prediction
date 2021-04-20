@@ -1,9 +1,11 @@
 import lightgbm as lgb  # LightGBM
 import xgboost as xgb
+import matplotlib.pyplot as plt  # グラフ描画用
+from matplotlib.backends.backend_pdf import PdfPages
+import shap
 
 
 def train_model_lgb(df_train, df_val):
-    # df_train, df_val  = train_test_split(df, test_size = 0.2)
 
     col = "取引価格（総額）_log"
     train_y = df_train[col]
@@ -24,10 +26,22 @@ def train_model_lgb(df_train, df_val):
         params,
         trains,
         valid_sets=valids,
-        num_boost_round=500,
+        num_boost_round=100,
         early_stopping_rounds=10,
         verbose_eval=10
     )
+
+    model.params["objective"] = "regression"
+
+    shap.initjs()
+
+    explainer = shap.TreeExplainer(model)
+
+    shap_values = explainer.shap_values(X=train_x)
+
+    shap.summary_plot(shap_values, train_x, plot_type="bar")
+    plt.title('summary_plot')
+    plt.savefig('lgb_shap/summary_plot.png', bbox_inches='tight')
 
     return model
 
@@ -55,7 +69,7 @@ def train_model_xgb(df_train, df_val):
         params,
         trains,
         evals=[(trains, "train"), (valids, "valid")],
-        num_boost_round=500,
+        num_boost_round=100,
         early_stopping_rounds=10,
         verbose_eval=10,
         evals_result=results_dict,
