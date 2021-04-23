@@ -26,9 +26,9 @@ def train_model_lgb(df_train, df_val):
         params,
         trains,
         valid_sets=valids,
-        num_boost_round=100,
-        early_stopping_rounds=10,
-        verbose_eval=10
+        num_boost_round=1000,
+        early_stopping_rounds=20,
+        verbose_eval=50
     )
 
     model.params["objective"] = "regression"
@@ -69,9 +69,9 @@ def train_model_xgb(df_train, df_val):
         params,
         trains,
         evals=[(trains, "train"), (valids, "valid")],
-        num_boost_round=100,
-        early_stopping_rounds=10,
-        verbose_eval=10,
+        num_boost_round=1000,
+        early_stopping_rounds=20,
+        verbose_eval=50,
         evals_result=results_dict,
 
     )
