@@ -5,6 +5,7 @@ import preprocessing_func as pf
 import model as model
 import xgboost as xgb
 from sklearn.metrics import mean_absolute_error as mae
+import time
 
 # csvファイルの読み込み
 print("csvファイルを読み込むペコ")
@@ -26,11 +27,19 @@ df = pf.data_pre(df)
 # データの分割
 df_train, df_val = train_test_split(df, test_size=0.2)
 
+# modelの学習にかかる時間を計測する
+model_study_time_start = time.time()
+
 # 学習
 print("モデルの学習を始めるペコ")
 model = model.train_model_lgb(df_train, df_val)
 print("モデルの学習が終わったペコ")
 # model = model.train_model_xgb(df_train, df_val)
+
+# 学習時間の表示
+model_study_time_finish = time.time()
+elapsed_time = model_study_time_finish - model_study_time_start
+print(f"モデルの学習にかかった時間は : {elapsed_time}ぺこ")
 
 # 検証用データの準備
 col = "取引価格（総額）_log"
